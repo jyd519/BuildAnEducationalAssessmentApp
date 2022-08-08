@@ -38,6 +38,7 @@ NSString *dictionaryBundleID = @"com.apple.Dictionary";
 // Prepare an assessment session and configure it.
 - (void)setupAssessmentSession {
     AEAssessmentConfiguration *config = [self participantConfiguration];
+    [config mainParticipantConfiguration].allowsNetworkAccess = true;
     self.session = [[AEAssessmentSession alloc] initWithConfiguration:config];
     self.session.delegate = self;
 }
@@ -68,6 +69,15 @@ NSString *dictionaryBundleID = @"com.apple.Dictionary";
         //   and add it to the configuration, using either the `networkAllowed`
         //   or `noNetwork` config, according to the selected option in the UI.
 
+        AEAssessmentApplication *main = [[AEAssessmentApplication alloc] initWithBundleIdentifier:@"cn.net.ata.eztest"];
+        [config setConfiguration:networkAllowedConfig forApplication:main];
+     
+      {
+        AEAssessmentApplication *main = [[AEAssessmentApplication alloc] initWithBundleIdentifier:@"cn.net.ata.testacc"];
+        [config setConfiguration:networkAllowedConfig forApplication:main];
+      }
+      
+      
         AEAssessmentApplication *calculator = [[AEAssessmentApplication alloc] initWithBundleIdentifier:calculatorBundleID];
 
         switch ( [self.calculatorOptions selectedSegment] ) {
